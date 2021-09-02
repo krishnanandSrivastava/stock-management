@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Apna Saree Sansar</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="css/fullcalendar.min.css">
+    <!-- https://fullcalendar.io/ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="invoice/style.css">
+    <script type="text/javascript" src="/eel.js"></script>
+
+    <link rel="stylesheet" href="css/tooplate.css">
+    <title>Apna Saree Sansar</title>
+</head>
+<body class="bg03">
+<div class="" id="home">
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>NOTE::=>Once Print Invoice Button Is Clicked All Entries Will Be Made In Inventory Database</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-xl navbar-light bg-light">
+                    <a class="navbar-brand" href="index.html">
+                        <h1 class="tm-site-title mb-0">Invoice</h1>
+                    </a>
+                    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.html">Dashboard
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="inventory.html" id="navbarDropdown1">
+                                    Inventory
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="invoice.html">Invoice</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="qr.html">QR-code generator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="license.html">License</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+
+                    <div class="input-group input-group-sm mb-3 " style="width: 200px;margin: 5px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text badge badge-secondary">Bar Code</span>
+                        </div>
+                        <input  onchange="addItem()"  id="barcode" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <input type="button" class="btn btn-primary btn-sm" value="clear" onclick="clearbar()" style="margin: 5px">
+
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-sm mb-3 " style="width: 200px;margin: 5px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text badge badge-secondary">GST No.</span>
+                        </div>
+                        <input id="gstno" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <button onclick="update_gst()" type="button" class="btn btn-primary btn-sm" style="margin-top: 20px">Update</button>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-sm mb-3 " style="width: 25vw;margin: 5px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text badge badge-secondary">TAX</span>
+                        </div>
+                        <input id="tax" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                </div>
+                <div class="col-3" style="text-align: center">
+                    <button type="button" class="btn btn-outline-danger" onclick="on_print()">Print Invoice</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bill" class="row" style="margin: 20px;background-color: white">
+        <header class="clearfix">
+            <div id="logo">
+                <img src="invoice/logo.png">
+            </div>
+            <div id="company">
+                <h2 class="name">Apna Saree Sansaar</h2>
+                <div>Aapki Apni Dukaan</div>
+                <div>+91-9412550346</div>
+                <div>+91-8791843688</div>
+<!--                <div><a href="mailto:company@example.com">company@example.com</a></div>-->
+            </div>
+        </header>
+        <main>
+            <div id="details" class="clearfix">
+                <div id="client">
+                    <div class="to">GST NUMBER</div>
+                    <h2 class="name" id="gst">GSTNO1234567</h2>
+                </div>
+                <div id="invoice">
+                    <h1>INVOICE #-#-#</h1>
+                    <div id="date_in" class="date">Date of Invoice: </div>
+                </div>
+            </div>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th class="no">#</th>
+                    <th class="desc">BARCODE____________________________________________________________________</th>
+                    <th class="unit"> PRICE</th>
+                    <th class="unit"> TAX</th>
+                    <th class="qty">DISCOUNT</th>
+                    <th class="total">TOTAL</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">GRAND TOTAL</td>
+                    <td id="grand_total">$6,500.00</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div id="thanks">Thank you!</div>
+            <div id="notices">
+                <div>NOTICE:</div>
+                <div class="notice">ALL RETURN WILL BE ENTERTAINED WITHIN 3 DAYS OF PURCHASE</div>
+            </div>
+        </main>
+        <footer>
+            Invoice was created on a computer and is valid without the signature and seal.
+        </footer>
+    </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<!-- https://jquery.com/download/ -->
+<script src="js/moment.min.js"></script>
+<!-- https://momentjs.com/ -->
+<script src="js/utils.js"></script>
+<script src="js/Chart.min.js"></script>
+<!-- http://www.chartjs.org/docs/latest/ -->
+<script src="js/fullcalendar.min.js"></script>
+<!-- https://fullcalendar.io/ -->
+<script src="js/bootstrap.min.js"></script>
+<!-- https://getbootstrap.com/ -->
+<script src="js/tooplate-scripts.js"></script>
+<script src="js/detailList.js"></script>
+<script>$(document).ready(()=>{
+get_gst();
+})</script>
+</body>
+</html>
